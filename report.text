@@ -1,0 +1,228 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{fancyvrb}
+\usepackage{graphicx}
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+\begin{document}
+\pagestyle{empty}
+\begin{center}
+    
+    {\fontsize{12pt}{14pt}\selectfont
+        МИНИСТЕРСТВО НАУКИ И ВЫСШЕГО ОБРАЗОВАНИЯ\\
+        РОССИЙСКОЙ ФЕДЕРАЦИИ\\
+        Федеральное государственное бюджетное образовательное учреждение\\
+        высшего образования\\
+        \textbf{АДЫГЕЙСКИЙ ГОСУДАРСТВЕННЫЙ УНИВЕРСИТЕТ}\\
+    }
+    \vspace{0.3cm}
+    {\fontsize{12pt}{14pt}\selectfont
+        НОК "Институт точных наук и цифровых технологий"\\
+        Кафедра автоматизированных систем обработки информации и\\
+        управления\\
+    }
+\end{center}
+\vspace{4.5cm}
+\begin{center}
+    
+    {\fontsize{14pt}{16pt}\selectfont ОТЧЕТ ПО ПРАКТИКЕ\\}
+    \vspace{0.5cm}
+    {\fontsize{16pt}{18pt}\selectfont \textbf{Программная реализация численного метода}\\}
+    {\fontsize{14pt}{16pt}\selectfont \textit{Текст из задания по варианту 7}\\}
+    \vspace{0.8cm}
+    {\fontsize{12pt}{14pt}\selectfont 1 курс, группа УТС\\}
+\end{center}
+\vspace{3cm}
+\hfill
+\begin{minipage}{0.48\textwidth}
+    
+    {\normalsize Выполнил:\\
+    \underline{\hspace{3.5cm}} Д. Н. Воробьев\\
+    «\underline{\hspace{0.8cm}}» \underline{\hspace{2.2cm}} 2026 г.\\
+    \vspace{0.6cm}
+    Руководитель:\\
+    \underline{\hspace{3.5cm}} С. В. Теплоухов\\
+    «\underline{\hspace{0.8cm}}» \underline{\hspace{2.2cm}} 2026 г.}
+\end{minipage}
+\vfill 
+\begin{center}
+    {\normalsize Майкоп, 2026 г.}
+\end{center}
+\newpage
+
+% --- НАЧАЛО ОСНОВНОГО ТЕКСТА ПОСЛЕ ТИТУЛЬНОГО ЛИСТА ---
+\pagestyle{plain} % Включаем стандартную нумерацию страниц для последующих листов
+\setcounter{page}{2} % Начинаем нумерацию со второй страницы
+
+\begin{center}
+    \large\textbf{ВАРИАНТ 7}
+\end{center}
+
+\vspace{0.3cm}
+
+\subsection*{Задание}
+Найти определитель матрицы.
+
+\vspace{0.3cm}
+
+\subsection*{Теория}
+
+Определителем квадратной матрицы второго порядка $A = \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix}$ называется число
+\[
+|A| = a_{11}a_{22} - a_{12}a_{21}.
+\]
+
+Определителем $A = \begin{pmatrix} a_{11} & \cdots & a_{1n} \\ \vdots & \ddots & \vdots \\ a_{n1} & \cdots & a_{nn} \end{pmatrix}$ квадратной матрицы порядка $n$, $n \ge 3$, называется число $|A| = \sum_{k=1}^{n} (-1)^{k+1} a_{1k} M_k$, где $M_k$ --- определитель матрицы порядка $n - 1$, полученной из матрицы $A$ вычеркиванием первой строки и столбца с номером $k$.
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\subsection*{Теоретическая часть}
+
+Определитель (детерминант) матрицы --- это одна из важнейших числовых характеристик квадратной матрицы, которая используется при исследовании и решении систем линейных уравнений, нахождении обратной матрицы, а также в задачах геометрии и механики.
+
+\subsubsection*{1. Понятие минора и алгебраического дополнения}
+
+Для вычисления определителей высших порядков ($n \ge 3$) вводятся понятия миноров и алгебраических дополнений:
+\begin{itemize}
+    \item \textbf{Минором} $M_{ij}$ элемента $a_{ij}$ квадратной матрицы $A$ порядка $n$ называется определитель матрицы порядка $n-1$, полученной из исходной матрицы путем вычеркивания $i$-й строки и $j$-го столбца.
+    \item \textbf{Алгебраическим дополнением} $A_{ij}$ элемента $a_{ij}$ называется его минор, умноженный на коэффициент $(-1)^{i+j}$:
+    \[
+    A_{ij} = (-1)^{i+j} M_{ij}.
+    \]
+\end{itemize}
+
+\subsubsection*{2. Теорема о разложении определителя}
+
+Определитель квадратной матрицы равен сумме произведений элементов любой строки (или столбца) на их соответствующие алгебраические дополнения.
+
+Разложение определителя по элементам $i$-й строки записывается как:
+\[
+|A| = a_{i1} A_{i1} + a_{i2} A_{i2} + \dots + a_{in} A_{in} = \sum_{j=1}^{n} a_{ij} A_{ij}.
+\]
+Формула общего определения, приведенная в разделе <<Теория>>, представляет собой частный случай этой теоремы --- разложение матрицы по ее первой строке ($i=1$), где слагаемые расписаны через миноры $M_k$ (в обозначениях картинки $M_k = M_{1k}$).
+
+\subsubsection*{3. Ключевые свойства определителей}
+\begin{enumerate}
+    \item \textbf{Равноправность строк и столбцов:} При транспонировании матрицы её определитель не меняется: $\det(A^T) = \det(A)$.
+    \item \textbf{Свойство антисимметрии:} При перестановке двух строк (или столбцов) знак определителя меняется на противоположный.
+    \item \textbf{Линейность:} Если все элементы некоторой строки (или столбца) умножить на число $\alpha$, то и весь определитель умножится на это число.
+    \item \textbf{Равенство нулю:} Определитель равен нулю, если матрица содержит нулевую строку или две одинаковые (пропорциональные) строки.
+    \item \textbf{Инвариантность:} Определитель матрицы не изменится, если к элементам одной строки прибавить элементы другой строки, предварительно умноженные на любое число.
+\end{enumerate}
+\newpage
+\section{Исходный код программы}
+Ниже представлен полный исходный код разработанной программы:
+\begin{Verbatim}[frame=single, numbers=left, tabsize=4]
+#include <iostream>
+#include <vector>
+#include <iomanip>
+#include <limits>
+#include <cmath>
+#include <clocale>
+#include <cstdlib> 
+using namespace std;
+int main()
+{
+    system("chcp 65001 > nul");
+    int n;
+    while (true)
+    {
+        cout << "Введите размер квадратной матрицы: ";
+        if (!(cin >> n))
+        {
+            cout << "Ошибка! Введите целое число.\n";
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;}
+        if (n <= 0)
+        {
+            cout << "Ошибка! Размер матрицы должен быть больше 0.\n";
+            continue;
+        }
+        break;}
+    vector<vector<double>> matrix(n, vector<double>(n));
+    cout << "\nВведите элементы матрицы:\n";
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            while (true)
+            {
+                cout << "A[" << i + 1 << "][" << j + 1 << "] = ";
+
+                if (!(cin >> matrix[i][j]))
+                {
+                    cout << "Ошибка! Введите число.\n";
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                    continue;
+                }
+
+                break;
+            }
+        }
+    }
+    double determinant = 1.0;
+    int swaps = 0;
+    for (int i = 0; i < n; i++)
+    {
+        int pivot = i;
+        for (int j = i + 1; j < n; j++)
+        {
+            if (fabs(matrix[j][i]) > fabs(matrix[pivot][i]))
+            {
+                pivot = j;
+            }
+        }
+        if (fabs(matrix[pivot][i]) < 1e-10)
+        {
+            determinant = 0;
+            break;
+        }
+        if (pivot != i)
+        {
+            swap(matrix[i], matrix[pivot]);
+            swaps++;
+        }
+        for (int j = i + 1; j < n; j++)
+        {
+            double factor = matrix[j][i] / matrix[i][i];
+
+            for (int k = i; k < n; k++)
+            {
+                matrix[j][k] -= factor * matrix[i][k];
+            }
+        }
+    }
+    if (determinant != 0)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            determinant *= matrix[i][i];
+        }
+        if (swaps % 2 != 0)
+        {
+            determinant *= -1;
+        }
+    }
+    cout << fixed << setprecision(4);
+    cout << "\nОпределитель матрицы = " << determinant << endl;
+    return 0;
+}
+
+\end{Verbatim}
+\newpage
+\section{Результат работы программы}
+\begin{figure}[h!]
+\centering
+\includegraphics[widht=0.8\textwidth]{2026-06-22_23-12-15.png}
+\caption{Скриншот выполнения программы}
+\label{fig:screenshot}
+\end{figure}
+\end{document}
+\end{document}
